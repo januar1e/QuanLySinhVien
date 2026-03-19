@@ -10,16 +10,19 @@ switch ($action) {
     case 'add':
         $controller->add();
         break;
-    case 'index':
-    default:
-        $controller->index();
-        break;
     // THÊM 2 CASE MỚI (bài 03)
     case 'edit':
         $controller->edit();
         break;
     case 'update':
         $controller->update();
+        break;
+    case 'delete':
+        $controller->delete();
+        break;
+    case 'index':
+    default:
+        $controller->index();
         break;
 }
 ?>

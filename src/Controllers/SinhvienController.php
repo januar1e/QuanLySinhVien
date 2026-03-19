@@ -82,4 +82,17 @@ class SinhvienController
         header('Location: index.php');
         exit();
     }
+    public function delete()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            // Nếu không có id, không làm gì cả và quay về trang chủ
+            header('Location: index.php');
+            exit();
+        }
+        // Gọi model để thực hiện xóa
+        $this->sinhvienModel->deleteStudent($id);
+        header('Location: index.php');
+        exit();
+    }
 }
