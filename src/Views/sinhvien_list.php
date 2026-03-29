@@ -160,10 +160,7 @@ thoại" required>
                 <thead>
                     <tr>
                         <th>ID</th>
-
-                        Bài mẫu
-
-                        <th>Họ và Tên</th>
+                        <th>Ảnh đại diện</th><th>Họ và Tên</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
                         <th>Hành động</th>
@@ -173,6 +170,13 @@ thoại" required>
                     <?php foreach ($students as $student): ?>
                         <tr>
                             <td><?php echo $student['id']; ?></td>
+                            <td>
+                                <?php if (!empty($student['avatar'])): ?>
+                                    <img src="../uploads/avatars/<?php echo $student['avatar']; ?>" alt="Avatar" width="50" height="50" style="border-radius: 50%;">
+                                <?php else: ?>
+                                    <img src="../uploads/avatars/default-avatar.jpg" alt="Avatar" width="50" height="50" style="border-radius: 50%;">
+                                <?php endif; ?>
+                            </td>
                             <td><?php echo
                                 htmlspecialchars($student['name']); ?></td>
                             <td><?php echo
