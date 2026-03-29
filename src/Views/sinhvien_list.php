@@ -141,17 +141,16 @@ initial-scale=1.0">
                 <a href="index.php"
                     style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 3px;">Reset</a>
             </form>
-            <form action="index.php?action=add" method="POST">
+            <form action="index.php?action=add" method="POST" enctype="multipart/form-data">
                 <h3>Thêm sinh viên mới</h3>
-                <input type="text" name="name" placeholder="Họ và
-
-Tên" required>
+                <input type="text" name="name" placeholder="Họ và Tên" required>
 
                 <input type="email" name="email" placeholder="Email" required>
 
-                <input type="text" name="phone" placeholder="Số điện
+                <input type="text" name="phone" placeholder="Số điện thoại" required>
 
-thoại" required>
+                <label for="avatar">Ảnh đại diện:</label>
+                <input type="file" id="avatar" name="avatar">
 
                 <button type="submit">Thêm mới</button>
             </form>
@@ -160,7 +159,8 @@ thoại" required>
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Ảnh đại diện</th><th>Họ và Tên</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Họ và Tên</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
                         <th>Hành động</th>
@@ -172,9 +172,11 @@ thoại" required>
                             <td><?php echo $student['id']; ?></td>
                             <td>
                                 <?php if (!empty($student['avatar'])): ?>
-                                    <img src="../uploads/avatars/<?php echo $student['avatar']; ?>" alt="Avatar" width="50" height="50" style="border-radius: 50%;">
+                                    <img src="../uploads/avatars/<?php echo $student['avatar']; ?>" alt="Avatar" width="50"
+                                        height="50" style="border-radius: 50%;">
                                 <?php else: ?>
-                                    <img src="../uploads/avatars/default-avatar.jpg" alt="Avatar" width="50" height="50" style="border-radius: 50%;">
+                                    <img src="../uploads/avatars/default-avatar.jpg" alt="Avatar" width="50" height="50"
+                                        style="border-radius: 50%;">
                                 <?php endif; ?>
                             </td>
                             <td><?php echo
