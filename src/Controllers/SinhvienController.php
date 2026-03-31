@@ -94,11 +94,15 @@ class SinhvienController
         }
         $offset = ($currentPage - 1) * $recordsPerPage;
         $keyword = $_GET['keyword'] ?? null;
+        $sortBy = $_GET['sort_by'] ?? 'id';
+        $sortOrder = $_GET['sort_order'] ?? 'DESC';
         // --- GỌI MODEL ---
         $result = $this->sinhvienModel->getStudents(
             $keyword,
             $recordsPerPage,
-            $offset
+            $offset,
+            $sortBy,
+            $sortOrder
         );
         $students = $result['data'];
         $totalRecords = $result['total'];

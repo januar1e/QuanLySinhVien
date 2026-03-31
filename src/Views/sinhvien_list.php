@@ -137,6 +137,28 @@ initial-scale=1.0">
                 </h3>
                 <input type="text" name="keyword" placeholder="Tìm theo tên, email, sđt..."
                     value="<?php echo htmlspecialchars($keyword ?? ''); ?>">
+                <label for="sort_by">Sắp xếp theo:</label>
+                <select name="sort_by" id="sort_by">
+                    <?php
+                    $sortOptions = [
+                        'id' => 'ID',
+                        'name' => 'Họ và Tên',
+                        'email' => 'Email',
+                        'phone' => 'Số điện thoại',
+                        'course' => 'Khóa học',
+                        'class_name' => 'Tên lớp',
+                        'major' => 'Ngành'
+                    ];
+                    foreach ($sortOptions as $field => $label):
+                    ?>
+                        <option value="<?php echo $field; ?>" <?php echo (isset($sortBy) && $sortBy === $field) ? 'selected' : ''; ?>><?php echo $label; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <label for="sort_order">Thứ tự:</label>
+                <select name="sort_order" id="sort_order">
+                    <option value="ASC" <?php echo (isset($sortOrder) && strtoupper($sortOrder) === 'ASC') ? 'selected' : ''; ?>>Tăng dần</option>
+                    <option value="DESC" <?php echo (isset($sortOrder) && strtoupper($sortOrder) === 'DESC') ? 'selected' : ''; ?>>Giảm dần</option>
+                </select>
                 <button type="submit">Tìm kiếm</button>
                 <a href="index.php"
                     style="padding: 8px 12px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 3px;">Reset
@@ -229,7 +251,7 @@ initial-scale=1.0">
             </table>
             <div class="pagination">
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a href="?keyword=<?php echo urlencode($keyword ?? ''); ?>&page=<?php echo $i; ?>"
+                    <a href="?keyword=<?php echo urlencode($keyword ?? ''); ?>&sort_by=<?php echo urlencode($sortBy ?? 'id'); ?>&sort_order=<?php echo urlencode($sortOrder ?? 'DESC'); ?>&page=<?php echo $i; ?>"
                         class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
                         <?php echo $i; ?>
                     </a>

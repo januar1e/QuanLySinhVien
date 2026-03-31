@@ -15,8 +15,17 @@ class SinhvienModel
     public function getStudents(
         $keyword = null,
         $limit = 5,
-        $offset = 0
+        $offset = 0,
+        $sortBy = 'id',
+        $sortOrder = 'DESC'
     ) {
+        // Validate sort parameters to prevent SQL injection from user input
+        $allowedSortBy = ['id', 'name', 'email', 'phone', 'course', 'class_name', 'major'];
+        if (!in_array($sortBy, $allowedSortBy)) {
+            $sortBy = 'id';
+        }
+        $sortOrder = strtoupper($sortOrder) === 'ASC' ? 'ASC' : 'DESC';
+
         // --- BƯỚC 1: ĐẾM TỔNG SỐ BẢN GHI ---
         $sqlCount = "SELECT COUNT(*) FROM students";
         $params = [];
@@ -32,7 +41,7 @@ class SinhvienModel
         if ($keyword) {
             $sqlData .= " WHERE name LIKE :keyword OR email LIKE :keyword OR phone LIKE :keyword";
         }
-        $sqlData .= " ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        $sqlData .= " ORDER BY {$sortBy} {$sortOrder} LIMIT :limit OFFSET :offset";
         $stmtData = $this->conn->prepare($sqlData);
         // Gán các tham số cho câu lệnh lấy dữ liệu
         if ($keyword) {
