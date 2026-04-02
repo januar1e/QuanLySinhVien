@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2026 at 02:47 PM
+-- Generation Time: Apr 02, 2026 at 03:02 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -137,6 +137,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -145,8 +146,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `created_at`) VALUES
-(3, 'Hoang', 'admin', '$2y$10$xhR7pgYfdSf.NF9p9kkmA.a34AKiV43P.rY6Gb9S7eA1KMOgPOFR.', '2026-03-29 01:46:14');
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `created_at`) VALUES
+(3, 'Hoang', 'admin', '', '$2y$10$xhR7pgYfdSf.NF9p9kkmA.a34AKiV43P.rY6Gb9S7eA1KMOgPOFR.', '2026-03-29 01:46:14'),
+(9, 'hoang nguyen', 'hoang2', 'hansjourey@gmail.com', '$2y$10$5GPNl2rWOS/DFV9MnKMJTemRSDMWlnssG0Ap/oeGnAjjxsuNZ7kC2', '2026-04-02 13:00:25');
 
 --
 -- Indexes for dumped tables
@@ -191,7 +193,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
