@@ -2,6 +2,8 @@
 // src/Controllers/UserController.php
 namespace Hzjan\Bai01QuanlySv\Controllers;
 use Hzjan\Bai01QuanlySv\Models\UserModel;
+use Hzjan\Bai01QuanlySv\Core\Mailer;
+use Hzjan\Bai01QuanlySv\Core\FlashMessage;
 class UserController
 {
     private $userModel;
@@ -69,34 +71,49 @@ class UserController
             $name = $_POST['name'] ?? '';
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
+            $email = $_POST['email'] ?? '';
+
             if (
                 empty($name) || empty($username) ||
-
-                empty($password)
+                empty($password) || empty($email)
             ) {
-
                 $error = "Vui lòng điền đầy đủ thông tin.";
                 require_once PROJECT_ROOT .
-
                     '/src/views/dangky.php';
                 return;
             }
+
             $result = $this->userModel->createUser(
                 $name,
-
                 $username,
-                $password
+                $password,
+                $email
             );
-            if ($result) {
-                // Đăng ký thành công, chuyển hướng đến trang đăng nhập
 
+            if ($result) {
+                // Đăng ký thành công, TIẾN HÀNH GỬI EMAIL
+                $subject = "Chào mừng bạn đến với Ứng dụng Quản lý Sinh viên!";
+                $body = "
+<h1>Chào mừng, " . htmlspecialchars($name) . "!</h1>
+<p>Cảm ơn bạn đã đăng ký tài khoản tại ứng dụng của chúng tôi.</p>
+<p>Tên đăng nhập của bạn là: <strong>" .
+                    htmlspecialchars($username) . "</strong></p>
+<p>Trân trọng,<br>Ban quản trị</p>
+";
+
+                // Gọi hàm gửi mail
+                if (Mailer::send($email, $name, $subject, $body)) {
+                    FlashMessage::set('login_form', 'Đăng ký thành công! Vui lòng kiểm tra email để xác nhận.', 'success');
+                } else {
+                    FlashMessage::set('login_form', 'Đăng ký thành công, nhưng không thể gửi email xác nhận.', 'error');
+                }
+
+                // Chuyển hướng đến trang đăng nhập
                 header('Location: index.php?action=login');
                 exit();
             } else {
                 // Tên đăng nhập đã tồn tại
-
-                $error = "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.";
-
+                $error = "Tên đăng nhập hoặc email đã tồn tại. Vui lòng chọn tên khác.";
                 require_once __DIR__ . '/../views/dangky.php';
             }
         }

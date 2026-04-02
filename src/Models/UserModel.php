@@ -26,7 +26,7 @@ username = :username");
     /**
      * Tạo người dùng mới
      */
-    public function createUser($name, $username, $password)
+    public function createUser($name, $username, $password, $email)
     {
         // Kiểm tra xem username đã tồn tại chưa
         if ($this->findUserByUsername($username)) {
@@ -41,14 +41,15 @@ username = :username");
 
         $stmt = $this->conn->prepare(
 
-            "INSERT INTO users (name, username, password) VALUES
+            "INSERT INTO users (name, username, password, email) VALUES
 
-(:name, :username, :password)"
+(:name, :username, :password, :email)"
 
         );
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $passwordHash);
+        $stmt->bindParam(':email', $email);
         return $stmt->execute();
     }
 }
